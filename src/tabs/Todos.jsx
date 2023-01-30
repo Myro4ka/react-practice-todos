@@ -18,6 +18,7 @@ export class Todos extends Component {
   state = {
     todos: todosJson,
     isFiltered: false,
+    search: '',
   };
 
   handleDeleteTodo = todoId => {
@@ -40,21 +41,39 @@ export class Todos extends Component {
     if (this.state.isFiltered) {
       const filteredTodo = this.state.todos.filter(todo => todo.completed);
       return filteredTodo;
+    } else if (this.state.search) {
+      return this.applySearchTodo();
     }
     return this.state.todos;
   };
-  
+
   handleFilterTodo = () => {
     this.setState(prev => ({ isFiltered: !prev.isFiltered }));
   };
 
+  handleSearchTodo = e => {
+    const { value } = e.target;
+    this.setState({ search: value });
+  };
+
+  applySearchTodo = () => {
+    const { search, todos } = this.state;
+    const searchedTodo = todos.filter(({ todo }) =>
+      todo.toLowerCase().includes(search.toLowerCase().trim())
+    );
+    return searchedTodo;
+  };
+
   render() {
-    const { todos } = this.state;
+    const { todos, search } = this.state;
+    console.log(search);
     return (
       <>
+        <SearchForm search={search} onChangeSearch={this.handleSearchTodo} />
         <Button type="button" onClick={this.handleFilterTodo}>
           Filter TODO
         </Button>
+
         <Grid>
           {this.applyFilterTodo().map(({ id, todo }) => (
             <GridItem key={id}>
