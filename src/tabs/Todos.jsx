@@ -64,9 +64,18 @@ export class Todos extends Component {
     return searchedTodo;
   };
 
+  componentDidMount() {
+    const localStorageDate = JSON.parse(localStorage.getItem('todos'));
+    localStorageDate && this.setState({ todos: localStorageDate });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos !== this.state.todos)
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+  }
+
   render() {
     const { todos, search } = this.state;
-    console.log(search);
     return (
       <>
         <SearchForm search={search} onChangeSearch={this.handleSearchTodo} />
@@ -77,7 +86,12 @@ export class Todos extends Component {
         <Grid>
           {this.applyFilterTodo().map(({ id, todo }) => (
             <GridItem key={id}>
-              <Todo todo={todo} id={id} onDelete={this.handleDeleteTodo} />
+              <Todo
+                todo={todo}
+                id={id}
+                newObj={{ el1: '' }}
+                onDelete={this.handleDeleteTodo}
+              />
             </GridItem>
           ))}
           <GridItem>
