@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import {
   Grid,
   GridItem,
@@ -9,6 +9,7 @@ import {
   Todo,
   Button,
 } from 'components';
+import { Modal } from 'components/Modal/Modal';
 
 import todosJson from '../data/todos.json';
 
@@ -19,6 +20,7 @@ export class Todos extends Component {
     todos: todosJson,
     isFiltered: false,
     search: '',
+    isShown: false,
   };
 
   handleDeleteTodo = todoId => {
@@ -74,15 +76,19 @@ export class Todos extends Component {
       localStorage.setItem('todos', JSON.stringify(this.state.todos));
   }
 
+  toggleModal = () => {
+    this.setState(prev => ({ isShown: !prev.isShown }));
+  };
+
   render() {
-    const { todos, search } = this.state;
+    const { todos, search, isShown } = this.state;
     return (
       <>
+        {isShown && <Modal onClose={this.toggleModal} />}
         <SearchForm search={search} onChangeSearch={this.handleSearchTodo} />
         <Button type="button" onClick={this.handleFilterTodo}>
           Filter TODO
         </Button>
-
         <Grid>
           {this.applyFilterTodo().map(({ id, todo }) => (
             <GridItem key={id}>
@@ -91,6 +97,7 @@ export class Todos extends Component {
                 id={id}
                 newObj={{ el1: '' }}
                 onDelete={this.handleDeleteTodo}
+                onShow={this.toggleModal}
               />
             </GridItem>
           ))}
