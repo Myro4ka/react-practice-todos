@@ -9,10 +9,9 @@ export default class SearchFormForImages extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    //   fetch
-    console.log(this.state);
-    console.log(this.state.search);
+    this.props.onSubmit(this.state.search);
   };
+
   render() {
     return (
       <SearchFormStyled onSubmit={this.handleSubmit}>

@@ -1,14 +1,5 @@
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
-import {
-  Grid,
-  GridItem,
-  SearchForm,
-  EditForm,
-  Text,
-  Todo,
-  Button,
-} from 'components';
+import { Grid, GridItem, SearchForm, Todo, Button } from 'components';
 import { Modal } from 'components/Modal/Modal';
 
 import todosJson from '../data/todos.json';
@@ -81,7 +72,7 @@ export class Todos extends Component {
   };
 
   render() {
-    const { todos, search, isShown } = this.state;
+    const { search, isShown } = this.state;
     return (
       <>
         {isShown && <Modal onClose={this.toggleModal} />}

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { Button, Text } from 'components';
+import { Text } from 'components';
 import { TodoWrapper, DeleteButton, EditButton } from './Todo.styled';
-import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 export class Todo extends Component {
   // const handleDelete = () => {
